@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<main>
+    @*<section class="row" aria-labelledby="aspnetTitle">
+        <h1 id="title">ASP.NET</h1>
+        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
+    </section>*@
+
+    <section class="row">
+        <div class="col-md-12">
+            <h2>POC Real Time Bid Clock</h2>
+            <p id="serverTime">Loading...</p>
+        </div>
+    </section>
+</main>
+
+@section scripts {
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">$(function () {
+            var timeHub = $.connection.timeHub;
+
+            timeHub.client.updateTime = function (time) {
+                $('#serverTime').text(time);
+            };
+
+            $.connection.hub.start().done(function () {
+                setInterval(function () {
+                    timeHub.server.getServerTime();
+                }, 500);
+            });
+        });</script>
+}
